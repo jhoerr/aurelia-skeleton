@@ -42,7 +42,7 @@ namespace WebApi.Tests.Integration
         {
             var container = IoCConfig.CreateContainer();
             container.Options.AllowOverridingRegistrations = true;
-            container.Register(() => ApplicationDbContext.Create(fixture.DbConnection), Lifestyle.Scoped);
+            container.Register(() => ApplicationDbContext.Create(), Lifestyle.Scoped);
             container.Register(MockIdentity.Create, Lifestyle.Scoped);
             container.Verify();
 

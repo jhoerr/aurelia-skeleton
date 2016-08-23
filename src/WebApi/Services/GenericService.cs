@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -123,6 +124,21 @@ namespace WebApi.Services
                                 throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
                         }
                     }
+
+                    SqlCeException sqlCeException = dbUpdateEx.InnerException.InnerException as SqlCeException;
+                    if (sqlCeException != null)
+                    {
+                        switch (sqlCeException.NativeError)
+                        {
+                            case 25016:  // Unique constraint error
+                                throw new ConcurrencyException();   // A custom exception of yours for concurrency issues
+
+                            default:
+                                // A custom exception of yours for other DB issues
+                                throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
+                        }
+                    }
+
 
                     if (dbUpdateEx.InnerException.InnerException.InnerException != null)
                     {

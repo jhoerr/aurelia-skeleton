@@ -1,8 +1,8 @@
 This repository implements a minimal Aurelia + Asp.Net WebAPI application with the following features:
 
 1. The Aurelia and WebAPI apps are implemented as separate Asp.Net web applications. They are intended to be hosted separately.
-2. Token-based authentication is provided by [IdentityServer3](https://github.com/IdentityServer3) backed by the standard Asp.Net Identity model.
-3. User management is provided by [IdentityManager](https://github.com/IdentityManager). 
+2. Token-based authentication is provided by [IdentityServer3](https://github.com/IdentityServer3) backed by the standard Asp.Net Identity model. Options exist to allow users to log in with local accounts or external Google/Facebook/etc accounts.
+3. User management is provided by [IdentityManager](https://github.com/IdentityManager).
 4. The WebAPI has a clean, simple data model backed by generic controllers and services.
 5. The Aurelia app provides simple dialog-driven data management.
 

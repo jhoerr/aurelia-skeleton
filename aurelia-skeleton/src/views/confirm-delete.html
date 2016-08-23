@@ -1,0 +1,14 @@
+﻿<template>
+    <ai-dialog>
+        <ai-dialog-header>
+            <h3>Confirm Delete</h3>
+        </ai-dialog-header>
+        <ai-dialog-body>
+            <p>Are you sure you want to delete <em>${entity.name}</em>? Any data associated with ${entity.name} will also be deleted. This is permanent and cannot be undone.</p>
+        </ai-dialog-body>
+        <ai-dialog-footer>
+            <button class="btn btn-warning" click.delegate="delete()" type="button">Delete</button>
+            <button class="btn btn-default" click.delegate="cancel()" type="button">Cancel</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

@@ -1,0 +1,14 @@
+{
+    "name": "My Aurelia App",
+    "version": "0.1",
+    "baseUrl": "https://localhost:44348",
+    "development": {
+        "baseUrl": "https://localhost:44348"
+    },
+    "test": {
+        "baseUrl": "https://test.mywebapi.com"
+    },
+    "production": {
+        "baseUrl": "https://mywebapi.com"
+    }
+}

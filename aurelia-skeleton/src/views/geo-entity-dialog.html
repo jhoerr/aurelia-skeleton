@@ -1,0 +1,51 @@
+﻿<template>
+    <require from="../views/validation-summary.html"></require>
+
+    <ai-dialog>
+        <ai-dialog-header>
+            <h3>Add Client</h3>
+        </ai-dialog-header>
+        <ai-dialog-body>
+            <form validation-renderer="bootstrap-form"
+                  validation-errors.bind="errors">
+
+                <validation-summary errors.bind="errors"
+                                    autofocus.bind="validationController.validateTrigger === 'manual'">
+                </validation-summary>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" value.bind="name & validate" class="form-control" id="name" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label for="address1">Address 1</label>
+                    <input type="text" value.bind="address1 & validate" class="form-control" id="address1" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label for="address2">Address 2</label>
+                    <input type="text" value.bind="address2 & validate" class="form-control" id="address2" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" value.bind="city & validate" class="form-control" id="city" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label for="stateOrProvince">State/Province</label>
+                    <input type="text" value.bind="stateOrProvince & validate" class="form-control" id="stateOrProvince" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" value.bind="postalCode & validate" class="form-control" id="postalCode" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input type="text" value.bind="country & validate" class="form-control" id="country" placeholder=""/>
+                </div>
+            </form>
+        </ai-dialog-body>
+        <ai-dialog-footer>
+            <button class="btn btn-primary" click.delegate="save()" type="button">Save</button>
+            <button class="btn btn-default" click.delegate="cancel()" type="button">Cancel</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

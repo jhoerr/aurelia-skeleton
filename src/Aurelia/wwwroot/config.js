@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0",
     "aurelia-auth": "npm:aurelia-auth@3.0.2",
@@ -29,7 +30,7 @@ System.config({
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bluebird": "npm:bluebird@3.4.1",
-    "bootstrap": "github:twbs/bootstrap@3.3.7",
+    "bootstrap": "github:twbs/bootstrap@3.3.6",
     "core-js": "npm:core-js@1.2.7",
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
@@ -54,7 +55,7 @@ System.config({
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
     },
-    "github:twbs/bootstrap@3.3.7": {
+    "github:twbs/bootstrap@3.3.6": {
       "jquery": "npm:jquery@2.2.4"
     },
     "github:vheissu/aurelia-configuration@1.0.4": {
@@ -232,7 +233,7 @@ System.config({
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
     "npm:font-awesome@4.6.3": {
-      "css": "github:systemjs/plugin-css@0.1.26"
+      "css": "github:systemjs/plugin-css@0.1.27"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"

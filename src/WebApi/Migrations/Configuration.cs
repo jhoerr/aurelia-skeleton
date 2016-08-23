@@ -70,7 +70,7 @@ namespace WebApi.Migrations
             {
                 if (!user.Roles.Any(r => r.RoleId == role.Id))
                 {
-                    userManager.AddToRoleAsync(user.Id, role.Name).Wait();
+                    userManager.AddClaimAsync(user.Id, new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, role.Name)).Wait();
                 }
             }
         }

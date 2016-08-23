@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/xp12i86o3ni5dis8/branch/master?svg=true)](https://ci.appveyor.com/project/jhoerr/aurelia-skeleton/branch/master)
+
 This repository implements a minimal, secure Aurelia + Asp.Net WebAPI application with the following features:
 
 1. The Aurelia and WebAPI apps are implemented as separate Asp.Net web applications. They are intended to be hosted separately.

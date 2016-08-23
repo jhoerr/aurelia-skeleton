@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using MyTested.WebApi;
@@ -10,6 +11,7 @@ using WebApi.Models;
 using WebApi.Tests.Integration.Fixtures;
 using WebApi.Tests.Mock;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace WebApi.Tests.Integration.Scaffolding
 {
@@ -24,11 +26,13 @@ namespace WebApi.Tests.Integration.Scaffolding
         private ApplicationDbContext CreateDbContext() => ApplicationDbContext.Create(_fixture.DbConnection);
         private readonly string _endpoint;
 
-        protected IntegrationTestsBase(DatabaseFixture fixture)
+        protected IntegrationTestsBase(DatabaseFixture fixture, ITestOutputHelper output)
         {
             _fixture = fixture;
 
             Mapper.Initialize(cfg => cfg.CreateMap<TRequest, TEntity>(MemberList.Source).ReverseMap());
+
+            output.WriteLine("Creating IoC container...");
 
             var container = IoCConfig.CreateContainer();
             container.Options.AllowOverridingRegistrations = true;
@@ -36,10 +40,16 @@ namespace WebApi.Tests.Integration.Scaffolding
             container.Register(MockIdentity.Create, Lifestyle.Scoped);
             container.Verify();
 
+            output.WriteLine("Created IoC container.");
+
+            output.WriteLine("Starting server...");
+
             Server = MyWebApi.IsRegisteredWith(WebApiConfig.RegisterForIntegrationTests)
                 .WithDependencyResolver(new SimpleInjectorWebApiDependencyResolver(container))
                 .WithErrorDetailPolicy(IncludeErrorDetailPolicy.Always)
                 .AndStartsServer();
+
+            output.WriteLine("Started server.");
 
             _endpoint = typeof(TController).Name.Replace("Controller", "");
         }

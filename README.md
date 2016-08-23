@@ -8,7 +8,7 @@ This repository implements a minimal Aurelia + Asp.Net WebAPI application with t
 
 ### Default Users
 
-Default users are created on first run of the WebApi app.
+The following default users are added with the database is created.
 
 1. Admin: username: *admin@example.com*, password: *@bcd1234!*
 2. User:  username: *user@example.com*,  password: *@bcd0987!*
@@ -27,7 +27,8 @@ Aurelia
 1. Clone this repo.
 2. Open the `aurelia-skeleton` solution in Visual Studio
 3. Rebuild the solution. Nuget and npm packages should be automatically restored.
-4. Press F5 to launch debug instances of the sites.
+4. Create the database. From the Package Manager Console change the default project to `WebApi` and execute `EntityFramework\update-database`.
+5. Press F5 to launch debug instances of the sites.
 
 ### Running the Aurelia app from the command line.
 

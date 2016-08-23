@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Common;
+using System.Data.Entity;
 using System.Web.Http;
+using WebApi.Models;
 using Xunit;
 
 namespace WebApi.Tests.Integration.Fixtures
@@ -11,7 +13,7 @@ namespace WebApi.Tests.Integration.Fixtures
 
         public DatabaseFixture()
         {
-            DbConnection = Effort.DbConnectionFactory.CreatePersistent(Guid.NewGuid().ToString());
+            DbConnection = Effort.DbConnectionFactory.CreateTransient();
             // ... initialize data in the test database ...
         }
 

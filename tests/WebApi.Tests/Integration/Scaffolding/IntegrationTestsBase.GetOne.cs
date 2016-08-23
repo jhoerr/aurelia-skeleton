@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using MyTested.WebApi;
+using Ploeh.AutoFixture;
 using Shouldly;
 using Xunit;
 
@@ -14,9 +15,9 @@ namespace WebApi.Tests.Integration.Scaffolding
         {
             MyWebApi
                 .Routes()
-                .ShouldMap($"/api/{_endpoint}/{Entity1.Id}")
+                .ShouldMap($"/api/{_endpoint}/1")
                 .WithHttpMethod(HttpMethod.Get)
-                .To<TController>(c => c.Get(Entity1.Id));
+                .To<TController>(c => c.Get(1));
         }
 
         [Fact]
@@ -24,7 +25,7 @@ namespace WebApi.Tests.Integration.Scaffolding
         {
             Server
                 .WithHttpRequestMessage(request => request
-                    .WithRequestUri($"/api/{_endpoint}/{Entity1.Id}")
+                    .WithRequestUri($"/api/{_endpoint}/1")
                     .WithMethod(HttpMethod.Get))
                 .ShouldReturnHttpResponseMessage()
                 .WithStatusCode(HttpStatusCode.Unauthorized);
@@ -33,28 +34,58 @@ namespace WebApi.Tests.Integration.Scaffolding
         [Fact]
         public void GetOneHasOkStatusCode()
         {
-            Server
+            TEntity entity = null;
+            try
+            {
+                using (var context = CreateDbContext())
+                {
+                    var autoFixture = new Fixture();
+                    entity = context.Set<TEntity>().Add(autoFixture.Create<TEntity>());
+                    context.SaveChanges();
+                }
+                Server
                 .WithHttpRequestMessage(request => request
                     .WithAuthorization()
-                    .WithRequestUri($"/api/{_endpoint}/{Entity1.Id}")
+                    .WithRequestUri($"/api/{_endpoint}/{entity.Id}")
                     .WithMethod(HttpMethod.Get))
                 .ShouldReturnHttpResponseMessage()
                 .WithStatusCode(HttpStatusCode.OK);
+            }
+            finally
+            {
+                CleanUp(entity);
+            }
         }
 
         [Fact]
         public void GetOneHasReturnsOne()
         {
-            Server
-                .WithHttpRequestMessage(request => request
-                    .WithAuthorization()
-                    .WithRequestUri($"/api/{_endpoint}/{Entity1.Id}")
-                    .WithMethod(HttpMethod.Get))
-                .ShouldReturnHttpResponseMessage()
-                .WithResponseModelOfType<TEntity>()
-                .AndProvideTheModel()
-                .Id
-                .ShouldBe(Entity1.Id);
+            TEntity entity = null;
+            try
+            {
+                using (var context = CreateDbContext())
+                {
+                    var autoFixture = new Fixture();
+                    entity = context.Set<TEntity>().Add(autoFixture.Create<TEntity>());
+                    context.SaveChanges();
+                }
+
+                Server
+                    .WithHttpRequestMessage(request => request
+                        .WithAuthorization()
+                        .WithRequestUri($"/api/{_endpoint}/{entity.Id}")
+                        .WithMethod(HttpMethod.Get))
+                    .ShouldReturnHttpResponseMessage()
+                    .WithResponseModelOfType<TEntity>()
+                    .AndProvideTheModel()
+                    .Id
+                    .ShouldBe(entity.Id);
+
+            }
+            finally
+            {
+                CleanUp(entity);
+            }
         }
 
         [Fact]
@@ -63,7 +94,7 @@ namespace WebApi.Tests.Integration.Scaffolding
             Server
                 .WithHttpRequestMessage(request => request
                     .WithAuthorization()
-                    .WithRequestUri($"/api/{_endpoint}/999999999")
+                    .WithRequestUri($"/api/{_endpoint}/1")
                     .WithMethod(HttpMethod.Get))
                 .ShouldReturnHttpResponseMessage()
                 .WithStatusCode(HttpStatusCode.NotFound);

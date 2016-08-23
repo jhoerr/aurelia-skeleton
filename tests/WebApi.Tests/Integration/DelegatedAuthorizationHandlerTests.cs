@@ -1,8 +1,12 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Web.Http;
 using MyTested.WebApi;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
 using WebApi.Models;
 using WebApi.Tests.Integration.Fixtures;
+using WebApi.Tests.Mock;
 using Xunit;
 
 namespace WebApi.Tests.Integration
@@ -29,14 +33,23 @@ namespace WebApi.Tests.Integration
         }
     }
 
+    [Collection("Database collection")]
     public class WhenUsingTheDelegatedAuthorizationHandler 
-        : IClassFixture<AuthenticatedServerFixtureWithEntities<Customer>>
     {
         private readonly IServerBuilder _server;
 
-        public WhenUsingTheDelegatedAuthorizationHandler(AuthenticatedServerFixtureWithEntities<Customer> fixture)
+        public WhenUsingTheDelegatedAuthorizationHandler(DatabaseFixture fixture)
         {
-            _server = fixture.Server;
+            var container = IoCConfig.CreateContainer();
+            container.Options.AllowOverridingRegistrations = true;
+            container.Register(() => ApplicationDbContext.Create(fixture.DbConnection), Lifestyle.Scoped);
+            container.Register(MockIdentity.Create, Lifestyle.Scoped);
+            container.Verify();
+
+            _server = MyWebApi.IsRegisteredWith(WebApiConfig.RegisterForIntegrationTests)
+                .WithDependencyResolver(new SimpleInjectorWebApiDependencyResolver(container))
+                .WithErrorDetailPolicy(IncludeErrorDetailPolicy.Always)
+                .AndStartsServer();
         }
 
         [Fact]
@@ -62,4 +75,5 @@ namespace WebApi.Tests.Integration
                 .WithStatusCode(HttpStatusCode.OK);
         }
     }
+    
 }

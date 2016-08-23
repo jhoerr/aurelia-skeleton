@@ -7,7 +7,7 @@ namespace WebApi.Tests.Integration
 {
     public class GenericContollerIntegrationTests : IntegrationTestsBase<Customer, CustomersController, CustomerRequest>
     {
-        public GenericContollerIntegrationTests(AuthenticatedServerFixtureWithEntities<Customer> fixture) : base(fixture)
+        public GenericContollerIntegrationTests(DatabaseFixture fixture) : base(fixture)
         {
         }
     }

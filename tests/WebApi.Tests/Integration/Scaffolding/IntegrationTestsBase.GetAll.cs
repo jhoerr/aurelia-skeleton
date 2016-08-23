@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using MyTested.WebApi;
+using Ploeh.AutoFixture;
 using Shouldly;
+using WebApi.Models;
 using Xunit;
 
 namespace WebApi.Tests.Integration.Scaffolding
@@ -47,19 +50,39 @@ namespace WebApi.Tests.Integration.Scaffolding
         [Fact]
         public void GetAllHasReturnsExpectedCollection()
         {
-            var actual = Server
-                .WithHttpRequestMessage(request => request
-                    .WithAuthorization()
-                    .WithRequestUri($"/api/{_endpoint}")
-                    .WithMethod(HttpMethod.Get))
-                .ShouldReturnHttpResponseMessage()
-                .WithResponseModelOfType<IEnumerable<TEntity>>()
-                .AndProvideTheModel()
-                .ToList();
+            TEntity entity1 = null;
+            TEntity entity2 = null;
 
-            actual.Count().ShouldBe(2);
-            actual.ShouldContain(entity => entity.Id == Entity1.Id);
-            actual.ShouldContain(entity => entity.Id == Entity2.Id);
+            try
+            {
+                using (var context = CreateDbContext())
+                {
+                    var autoFixture = new Fixture();
+                    entity1 = context.Set<TEntity>().Add(autoFixture.Create<TEntity>());
+                    entity2 = context.Set<TEntity>().Add(autoFixture.Create<TEntity>());
+                    context.SaveChanges();
+                }
+
+                var actual = Server
+                    .WithHttpRequestMessage(request => request
+                        .WithAuthorization()
+                        .WithRequestUri($"/api/{_endpoint}")
+                        .WithMethod(HttpMethod.Get))
+                    .ShouldReturnHttpResponseMessage()
+                    .WithResponseModelOfType<IEnumerable<TEntity>>()
+                    .AndProvideTheModel()
+                    .ToList();
+
+                actual.Count().ShouldBe(2);
+                actual.ShouldContain(entity => entity.Id == entity1.Id);
+                actual.ShouldContain(entity => entity.Id == entity2.Id);
+
+            }
+            finally
+            {
+                CleanUp(entity1);
+                CleanUp(entity2);
+            }
         }
     }
 }

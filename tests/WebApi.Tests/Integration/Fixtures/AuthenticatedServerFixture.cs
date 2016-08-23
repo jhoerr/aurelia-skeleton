@@ -13,6 +13,7 @@ namespace WebApi.Tests.Integration.Fixtures
 
         public DatabaseFixture()
         {
+            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
             DbConnection = Effort.DbConnectionFactory.CreateTransient();
             // ... initialize data in the test database ...
         }

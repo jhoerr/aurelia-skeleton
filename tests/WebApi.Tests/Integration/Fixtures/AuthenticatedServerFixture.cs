@@ -14,7 +14,7 @@ namespace WebApi.Tests.Integration.Fixtures
         where T:Entity 
     {
         public readonly ApplicationDbContext DbContext;
-        public readonly DbConnection DbConnection = Effort.DbConnectionFactory.CreatePersistent(Guid.NewGuid().ToString());
+        public readonly DbConnection DbConnection;
         public IServerBuilder Server { get; }
         public T Entity1 { get; }
         public T Entity2 { get; }
@@ -25,6 +25,7 @@ namespace WebApi.Tests.Integration.Fixtures
 
             Effort.Provider.EffortProviderConfiguration.RegisterProvider();
 
+            DbConnection = Effort.DbConnectionFactory.CreatePersistent(Guid.NewGuid().ToString());
             DbContext = ApplicationDbContext.Create(DbConnection);
             Entity1 = DbContext.Set<T>().Add(fixture.Create<T>());
             Entity2 = DbContext.Set<T>().Add(fixture.Create<T>());

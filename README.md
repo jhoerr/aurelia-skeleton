@@ -8,6 +8,32 @@ This repository implements a minimal, secure Aurelia + Asp.Net WebAPI applicatio
 4. Token- and cookie-based authentication are faciliated by [IdentityServer3](https://github.com/IdentityServer) backed by the standard Asp.Net Identity model. Options exist to allow users to log in with local accounts or external Google/Facebook/etc accounts.
 5. User management is provided by [IdentityManager](https://github.com/IdentityManager).
 
+### Prerequisites
+
+* Download and install Node.JS from [NodeJS.org](https://nodejs.org/en/). This will install `npm`, a package manager.
+* Open a cmd prompt. Type `npm version` to confirm npm is installed.
+```
+C:\Users\jhoerr>npm version
+{ npm: '2.15.8',
+  ares: '1.10.1-DEV',
+  http_parser: '2.5.2',
+  icu: '56.1',
+  modules: '46',
+  node: '4.4.7',
+  openssl: '1.0.2h',
+  uv: '1.8.0',
+  v8: '4.5.103.36',
+  zlib: '1.2.8' }
+```
+* Install `jspm` (another package manager)
+```
+npm install jspm -g
+```
+* Install `gulp` (another package manager) 
+```
+npm install gulp -g
+```
+
 ### Default Users
 
 The following default users are added with the database is created.

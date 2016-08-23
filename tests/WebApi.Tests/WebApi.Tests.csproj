@@ -169,11 +169,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\WebApi\WebApi.csproj">
-      <Project>{1FC60BD4-DCED-4B23-9283-5FE271894A16}</Project>
-      <Name>VDP.Accession</Name>
+      <Project>{1fc60bd4-dced-4b23-9283-5fe271894a16}</Project>
+      <Name>WebApi</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -13,8 +13,6 @@ namespace WebApi.Tests.Mock
 
         public static ApplicationDbContext Create(List<T> entities)
         {
-            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
-
             var queryable = entities.AsQueryable();
             var mockSet = Substitute.For<DbSet<T>, IQueryable<T>>();
 

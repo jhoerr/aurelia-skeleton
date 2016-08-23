@@ -85,7 +85,9 @@ namespace WebApi.Tests.Integration.Scaffolding
 
                 actual.ShouldNotBeNull();
                 actual.CreatedBy.ShouldBe(entity.CreatedBy);
+                actual.CreatedOn.ShouldBe(entity.CreatedOn);
                 actual.ModifiedBy.ShouldBe(MockIdentity.Username);
+                actual.ModifiedOn.ShouldNotBe(entity.CreatedOn);
             }
             finally
             {

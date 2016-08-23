@@ -13,12 +13,8 @@ namespace WebApi.Tests.Integration.Fixtures
 
         public DatabaseFixture()
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
-            using (var context = new ApplicationDbContext())
-                context.Database.CreateIfNotExists();
-
-//                Effort.Provider.EffortProviderConfiguration.RegisterProvider();
-//            DbConnection = Effort.DbConnectionFactory.CreateTransient();
+            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
+            DbConnection = Effort.DbConnectionFactory.CreateTransient();
             // ... initialize data in the test database ...
         }
 

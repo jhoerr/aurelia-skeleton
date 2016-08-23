@@ -11,7 +11,6 @@ namespace WebApi.Tests.Integration.Fixtures
 
         public DatabaseFixture()
         {
-            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
             DbConnection = Effort.DbConnectionFactory.CreatePersistent(Guid.NewGuid().ToString());
             // ... initialize data in the test database ...
         }

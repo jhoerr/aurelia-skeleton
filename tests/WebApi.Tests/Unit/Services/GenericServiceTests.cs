@@ -14,7 +14,12 @@ using Xunit;
 
 namespace WebApi.Tests.Unit.Services
 {
-    public class WhenGetting
+    [Collection("Database collection")]
+    public class GenericServiceTestBase
+    {
+    }
+
+    public class WhenGetting : GenericServiceTestBase
     {
         private readonly Customer _customer1;
         private readonly Customer _customer2;
@@ -66,7 +71,7 @@ namespace WebApi.Tests.Unit.Services
         }
     }
 
-    public class WhenAdding
+    public class WhenAdding : GenericServiceTestBase
     {
         private readonly Fixture _fixture = new Fixture();
 
@@ -166,7 +171,7 @@ namespace WebApi.Tests.Unit.Services
         }
     }
 
-    public class WhenUpdating
+    public class WhenUpdating : GenericServiceTestBase
     {
         private readonly Fixture _fixture = new Fixture();
 
@@ -281,7 +286,7 @@ namespace WebApi.Tests.Unit.Services
         }
     }
 
-    public class WhenDeleting
+    public class WhenDeleting : GenericServiceTestBase
     {
         private readonly Fixture _fixture = new Fixture();
 

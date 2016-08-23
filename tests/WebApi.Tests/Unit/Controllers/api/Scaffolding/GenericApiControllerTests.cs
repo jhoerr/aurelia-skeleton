@@ -14,6 +14,7 @@ using Xunit;
 
 namespace WebApi.Tests.Unit.Controllers.api.Scaffolding
 {
+    [Collection("Database collection")]
     public abstract class GenericApiControllerTests<TEntity, TController, TRequest> 
         where TEntity: Entity, new()
         where TRequest: EntityRequest, new()
